@@ -1,0 +1,20 @@
+def tasuj(l1: List[Int], l2: List[Int]): List[Int] = {
+  @tailrec
+  def rep(acc: List[Int], l1_inner: List[Int], l2_inner: List[Int]): List[Int] = {
+    if l1_inner.isEmpty && l2_inner.isEmpty then acc
+    else {
+      if !(l1_inner.isEmpty || l2_inner.head < l1_inner.head) && (l2_inner.isEmpty || l1_inner.head <= l2_inner.head) then
+        if acc.isEmpty || l1_inner.head != acc.last then
+          rep(acc.appended(l1_inner.head), l1_inner.tail, l2_inner)
+        else
+          rep(acc, l1_inner.tail, l2_inner)
+      else
+        if acc.isEmpty || l2_inner.head != acc.last then
+          rep(acc.appended(l2_inner.head), l1_inner, l2_inner.tail)
+        else
+          rep(acc, l1_inner, l2_inner.tail)
+    }
+  }
+
+  rep(List(), l1, l2)
+}
